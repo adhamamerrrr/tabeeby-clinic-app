@@ -152,8 +152,9 @@ class Clinic {
   });
   factory Clinic.decode(String data) {
     final j = jsonDecode(data) as Map<String, dynamic>;
-    if (j['version'] != 1)
+    if (j['version'] != 1) {
       throw const FormatException('Unsupported saved data');
+    }
     final visits = (j['visits'] as List)
         .map((v) => Visit.fromJson(v as Map<String, dynamic>))
         .toList();

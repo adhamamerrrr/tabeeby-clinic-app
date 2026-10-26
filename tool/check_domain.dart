@@ -1,4 +1,6 @@
-import '../lib/clinic.dart';
+import 'dart:io';
+
+import 'package:tabeeby_clinic_app/clinic.dart';
 
 void check(bool value) {
   if (!value) throw StateError('Domain check failed');
@@ -32,7 +34,7 @@ void main() {
   final done = c.book('d1', 'Other', 'Followup', time, now: now);
   c.change(done.id, VisitStatus.completed, now: time, note: 'Demo note');
   check(Clinic.decode(c.encode()).visits.last.note == 'Demo note');
-  print(
+  stdout.writeln(
     'PASS: booking, conflicts, doctor availability, cancellation, completion, persistence and malformed data.',
   );
 }

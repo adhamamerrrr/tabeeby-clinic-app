@@ -55,12 +55,13 @@ class _ClinicHomeState extends State<ClinicHome> {
         error = null;
       });
     } catch (_) {
-      if (mounted)
+      if (mounted) {
         setState(() {
           loading = false;
           error =
               'Saved appointments could not be loaded. Your data has been preserved. Retry to continue.';
         });
+      }
     }
   }
 
@@ -75,10 +76,11 @@ class _ClinicHomeState extends State<ClinicHome> {
       }
       if (mounted) setState(() => clinic = next);
     } catch (e) {
-      if (mounted)
+      if (mounted) {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(e.toString())));
+      }
     } finally {
       if (mounted) setState(() => busy = false);
     }
@@ -116,8 +118,9 @@ class _ClinicHomeState extends State<ClinicHome> {
         ],
       ),
     );
-    if (confirmed == true)
+    if (confirmed == true) {
       await mutate((c) => c.change(visit.id, VisitStatus.cancelled));
+    }
   }
 
   Future<void> complete(Visit visit) async {
@@ -146,10 +149,11 @@ class _ClinicHomeState extends State<ClinicHome> {
         ],
       ),
     );
-    if (note != null)
+    if (note != null) {
       await mutate(
         (c) => c.change(visit.id, VisitStatus.completed, note: note),
       );
+    }
   }
 
   String date(DateTime t) =>
@@ -428,11 +432,12 @@ class _BookingPageState extends State<BookingPage> {
                       firstDate: DateTime(now.year, now.month, now.day),
                       lastDate: now.add(const Duration(days: 90)),
                     );
-                    if (date != null)
+                    if (date != null) {
                       setState(() {
                         day = date;
                         slot = null;
                       });
+                    }
                   },
                 ),
                 const SizedBox(height: 12),
@@ -460,11 +465,12 @@ class _BookingPageState extends State<BookingPage> {
                   onPressed: slot == null
                       ? null
                       : () {
-                          if (form.currentState!.validate())
+                          if (form.currentState!.validate()) {
                             Navigator.pop(
                               context,
                               Booking(patient.text, reason.text, slot!),
                             );
+                          }
                         },
                   child: const Text('Confirm appointment'),
                 ),
