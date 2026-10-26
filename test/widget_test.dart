@@ -14,7 +14,11 @@ void main() {
     await tester.enterText(find.byType(TextFormField).at(1), 'Sample checkup');
     await tester.tap(find.text('09:00'));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Confirm appointment'));
+    await tester.scrollUntilVisible(
+      find.text('Confirm appointment'),
+      200,
+      scrollable: find.byType(Scrollable).last,
+    );
     await tester.tap(find.text('Confirm appointment'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Appointments').last);
