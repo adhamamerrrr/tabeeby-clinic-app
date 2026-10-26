@@ -41,7 +41,7 @@ flutter test
 flutter build web
 ```
 
-The Dart domain smoke runner and `dart analyze lib/clinic.dart` passed during this update. Source files were formatted with Dart. **Flutter UI analysis, widget tests and platform builds were not executed successfully in the build environment.** The included GitHub Actions workflow is prepared but has not run. Run these checks locally before considering the app release-ready.
+GitHub Actions passed on 26 October 2026: dependency installation, Dart formatting, Flutter analysis, four domain tests and the end-to-end widget test for booking, cancellation and persistence across restart. The standalone Dart domain smoke runner also passed. [View the successful Flutter checks](https://github.com/adhamamerrrr/tabeeby-clinic-app/actions/runs/40284548264). Physical-device testing and production platform builds remain outstanding; passing these checks does not establish release readiness.
 
 ## Scope
 
