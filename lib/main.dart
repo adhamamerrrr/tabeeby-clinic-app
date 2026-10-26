@@ -58,7 +58,8 @@ class _ClinicHomeState extends State<ClinicHome> {
       if (mounted)
         setState(() {
           loading = false;
-          error = 'Saved appointments could not be loaded. Your data has been preserved. Retry to continue.';
+          error =
+              'Saved appointments could not be loaded. Your data has been preserved. Retry to continue.';
         });
     }
   }
@@ -75,8 +76,9 @@ class _ClinicHomeState extends State<ClinicHome> {
       if (mounted) setState(() => clinic = next);
     } catch (e) {
       if (mounted)
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(e.toString())));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
     } finally {
       if (mounted) setState(() => busy = false);
     }
