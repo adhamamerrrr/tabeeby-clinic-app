@@ -1,4 +1,8 @@
-# Tabeeby - clinic appointment demo
+# Tabeeby — Flutter Clinic Appointment App
+
+Flutter appointment-booking demo featuring doctor discovery, slot selection, booking conflict checks, and patient appointment management.
+
+## Project overview
 
 A newly authored Flutter portfolio rebuild, added in October 2026. The previous repository contained only a README. This is an offline demonstration with fictional doctors and sample patient data, not recovered original application code.
 
