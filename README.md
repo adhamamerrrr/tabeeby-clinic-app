@@ -27,6 +27,7 @@ Keep the included `lib/` implementation and `test/` files if a local generator o
 - Validated booking with doctor-slot and patient-time conflict prevention.
 - Patient appointment list, cancellation confirmation and visit history.
 - Doctor demonstration view, filtering and completion with optional notes.
+- Privacy-conscious appointment summary: booked/completed/cancelled counts, completed-visit fee totals, and optional date-range or doctor filters. This is a domain API; it is not yet a dashboard screen.
 - Local JSON persistence through SharedPreferences; failed writes preserve the previous in-memory state. Invalid stored data shows a retry screen without overwriting it.
 - Responsive Material 3 layout and empty/loading/error states.
 
@@ -41,7 +42,7 @@ flutter test
 flutter build web
 ```
 
-GitHub Actions passed on 26 October 2026: dependency installation, Dart formatting, Flutter analysis, four domain tests and the end-to-end widget test for booking, cancellation and persistence across restart. The standalone Dart domain smoke runner also passed. [View the successful Flutter checks](https://github.com/adhamamerrrr/tabeeby-clinic-app/actions/runs/40284548264). Physical-device testing and production platform builds remain outstanding; passing these checks does not establish release readiness.
+GitHub Actions passed on 26 October 2026: dependency installation, Dart formatting, Flutter analysis, four domain tests and the end-to-end widget test for booking, cancellation and persistence across restart. The standalone Dart domain smoke runner also passed. [View the successful Flutter checks](https://github.com/adhamamerrrr/tabeeby-clinic-app/actions/runs/40284548264). The new appointment-summary tests have been committed but not yet verified in CI. Physical-device testing and production platform builds remain outstanding; passing these checks does not establish release readiness.
 
 ## Scope
 
