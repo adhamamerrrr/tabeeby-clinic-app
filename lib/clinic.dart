@@ -105,11 +105,14 @@ class Clinic {
       switch (visit.status) {
         case VisitStatus.booked:
           booked++;
+          break;
         case VisitStatus.completed:
           completed++;
           revenue += doctors.firstWhere((d) => d.id == visit.doctorId).fee;
+          break;
         case VisitStatus.cancelled:
           cancelled++;
+          break;
       }
     }
     return ClinicSummary(
