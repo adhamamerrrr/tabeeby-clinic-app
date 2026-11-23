@@ -28,6 +28,14 @@ void main() {
 
     expect(find.text('Appointment overview'), findsOneWidget);
     expect(find.text('Completed visit fees: EGP 0'), findsOneWidget);
+    final period = find.byKey(const ValueKey('summary-period'));
+    await tester.ensureVisible(period);
+    await tester.pumpAndSettle();
+    await tester.tap(period);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Last 7 days').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Completed visit fees: EGP 0'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }
