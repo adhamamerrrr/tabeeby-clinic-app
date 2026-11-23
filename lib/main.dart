@@ -207,6 +207,57 @@ class _ClinicHomeState extends State<ClinicHome> {
     );
   }
 
+  Widget clinicSummary() {
+    final summary = clinic.summary(doctorId: doctorFilter);
+    final metrics = [
+      ('Booked', summary.booked, Icons.event_available_outlined),
+      ('Completed', summary.completed, Icons.task_alt_outlined),
+      ('Cancelled', summary.cancelled, Icons.event_busy_outlined),
+    ];
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Appointment overview',
+                style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 8),
+            Text('Demo totals for the selected doctor · no patient details'),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 12,
+              runSpacing: 12,
+              children: [
+                for (final metric in metrics)
+                  SizedBox(
+                    width: 150,
+                    child: Semantics(
+                      label: '${metric.$1}: ${metric.$2}',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(metric.$3),
+                          Text('${metric.$2}',
+                              style: Theme.of(context).textTheme.headlineSmall),
+                          Text(metric.$1),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text('Completed visit fees: EGP ${summary.completedRevenue}',
+                style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 4),
+            const Text('Illustrative totals based on fictional appointment fees.'),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final upcoming = clinic.visits
@@ -322,6 +373,10 @@ class _ClinicHomeState extends State<ClinicHome> {
                             .toList(),
                         onChanged: (v) => setState(() => doctorFilter = v!),
                       ),
+                    if (tab == 2) ...[
+                      const SizedBox(height: 12),
+                      clinicSummary(),
+                    ],
                     if (tab != 0) ...[
                       const SizedBox(height: 12),
                       if (list.isEmpty)
