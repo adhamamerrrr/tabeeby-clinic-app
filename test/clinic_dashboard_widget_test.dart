@@ -19,6 +19,8 @@ void main() {
 
     final doctorSelector = find.byType(DropdownButtonFormField<String>);
     expect(doctorSelector, findsOneWidget);
+    await tester.ensureVisible(doctorSelector);
+    await tester.pumpAndSettle();
     await tester.tap(doctorSelector);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Dr. Omar Ali').last);
