@@ -36,6 +36,7 @@ class _ClinicHomeState extends State<ClinicHome> {
   String? error;
   int tab = 0;
   String doctorFilter = doctors.first.id;
+  int reportDays = 0; // 0 means all appointment dates.
   @override
   void initState() {
     super.initState();
@@ -208,7 +209,18 @@ class _ClinicHomeState extends State<ClinicHome> {
   }
 
   Widget clinicSummary() {
-    final summary = clinic.summary(doctorId: doctorFilter);
+    final now = DateTime.now();
+    final from = reportDays == 0
+        ? null
+        : DateTime(now.year, now.month, now.day)
+            .subtract(Duration(days: reportDays - 1));
+    final until = reportDays == 0
+        ? null
+        : DateTime(now.year, now.month, now.day)
+            .add(const Duration(days: 1));
+    final summary = clinic.summary(
+      doctorId: doctorFilter, from: from, until: until,
+    );
     final metrics = [
       ('Booked', summary.booked, Icons.event_available_outlined),
       ('Completed', summary.completed, Icons.task_alt_outlined),
@@ -224,6 +236,20 @@ class _ClinicHomeState extends State<ClinicHome> {
                 style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 8),
             Text('Demo totals for the selected doctor · no patient details'),
+            const SizedBox(height: 12),
+            DropdownButtonFormField<int>(
+              key: const ValueKey('summary-period'),
+              initialValue: reportDays,
+              decoration: const InputDecoration(labelText: 'Reporting period'),
+              items: const [
+                DropdownMenuItem(value: 0, child: Text('All dates')),
+                DropdownMenuItem(value: 7, child: Text('Last 7 days')),
+                DropdownMenuItem(value: 30, child: Text('Last 30 days')),
+              ],
+              onChanged: (days) {
+                if (days != null) setState(() => reportDays = days);
+              },
+            ),
             const SizedBox(height: 12),
             Wrap(
               spacing: 12,
