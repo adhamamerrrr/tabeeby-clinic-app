@@ -64,10 +64,59 @@ class Visit {
   }
 }
 
+
+class ClinicSummary {
+  final int booked, completed, cancelled, completedRevenue;
+  const ClinicSummary({
+    required this.booked,
+    required this.completed,
+    required this.cancelled,
+    required this.completedRevenue,
+  });
+  int get total => booked + completed + cancelled;
+  Map<String, int> toJson() => {
+    'booked': booked,
+    'completed': completed,
+    'cancelled': cancelled,
+    'total': total,
+    'completedRevenue': completedRevenue,
+  };
+}
+
 class Clinic {
   final List<Visit> _visits;
   Clinic([List<Visit>? visits]) : _visits = List.of(visits ?? []);
   List<Visit> get visits => List.unmodifiable(_visits);
+
+  /// Aggregate appointment counts without exposing patient identifiers.
+  /// Optional [from] and [until] are inclusive/exclusive visit-time bounds.
+  ClinicSummary summary({DateTime? from, DateTime? until, String? doctorId}) {
+    if (from != null && until != null && !from.isBefore(until)) {
+      throw ArgumentError('from must be earlier than until');
+    }
+    if (doctorId != null && !doctors.any((d) => d.id == doctorId)) {
+      throw ArgumentError('Unknown doctor');
+    }
+    var booked = 0, completed = 0, cancelled = 0, revenue = 0;
+    for (final visit in _visits) {
+      if (doctorId != null && visit.doctorId != doctorId) continue;
+      if (from != null && visit.time.isBefore(from)) continue;
+      if (until != null && !visit.time.isBefore(until)) continue;
+      switch (visit.status) {
+        case VisitStatus.booked:
+          booked++;
+        case VisitStatus.completed:
+          completed++;
+          revenue += doctors.firstWhere((d) => d.id == visit.doctorId).fee;
+        case VisitStatus.cancelled:
+          cancelled++;
+      }
+    }
+    return ClinicSummary(
+      booked: booked, completed: completed,
+      cancelled: cancelled, completedRevenue: revenue,
+    );
+  }
   List<DateTime> slots(DateTime day, String doctorId, DateTime now) =>
       [
             for (var h = 9; h < 17; h++)
