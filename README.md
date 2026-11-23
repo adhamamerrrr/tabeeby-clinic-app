@@ -27,7 +27,7 @@ Keep the included `lib/` implementation and `test/` files if a local generator o
 - Validated booking with doctor-slot and patient-time conflict prevention.
 - Patient appointment list, cancellation confirmation and visit history.
 - Doctor demonstration view, filtering and completion with optional notes.
-- Privacy-conscious appointment summary: booked/completed/cancelled counts, completed-visit fee totals, and optional date-range or doctor filters. The Clinic tab displays the selected doctor's appointment counts and completed-fee total.
+- Privacy-conscious appointment summary: booked/completed/cancelled counts, completed-visit fee totals, and optional date-range or doctor filters. The Clinic tab displays the selected doctor's appointment counts and completed-fee total, with all-dates, last-7-days, and last-30-days filters.
 - Local JSON persistence through SharedPreferences; failed writes preserve the previous in-memory state. Invalid stored data shows a retry screen without overwriting it.
 - Responsive Material 3 layout and empty/loading/error states.
 
